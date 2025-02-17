@@ -1,0 +1,12 @@
+:root {
+    --primary-color: #FBFBFB;
+    --complementary-color: #E8F9FF;
+    --opposing-color: #C4D9FF;
+    --highlight-color: #C5BAFF;
+
+    --background-color: #F7F7F7;
+
+    --title-font: "Montserrat", sans-serif;
+    --subtitle-font: "Lora", serif;
+    --body-font: "HInd Madurai", sans-serif;
+}

@@ -1,44 +1,48 @@
+@import "_root.css";
+
+
 .header {
-    background-color: #333;
-    color: #fff;
-    padding: 1rem 0;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  }
-  
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 1rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .title {
-    margin: 0;
-    font-size: 1.5rem;
-    font-weight: bold;
-  }
-  
-  .nav-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    gap: 2rem;
-  }
-  
-  .nav-item {
-    padding: 0.5rem 0;
-  }
-  
-  .nav-link {
-    color: #fff;
-    text-decoration: none;
-    font-size: 1rem;
-    transition: color 0.2s ease;
-  }
-  
-  .nav-link:hover {
-    color: #ddd;
-  }
+  background-color: #f8f9fa;
+  padding: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  caret-color: transparent;
+}
+
+.nav {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.nav-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+button {
+  font-family: var(--subtitle-font);
+}
+
+.nav-list li {
+  margin-left: 1rem;
+  cursor: none;
+}
+
+.nav-list button {
+  background: none;
+  border: none;
+  color: #007bff;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  transition: color 0.3s ease;
+}
+
+.nav-list button:hover {
+  color: #0056b3;
+}
+
+button {
+  cursor: none;
+}

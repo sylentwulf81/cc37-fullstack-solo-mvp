@@ -1,50 +1,24 @@
-import React from "react";
-import { useRef, useEffect, useState } from "react"; // allows React to reference values that are not strictly necessary for rendering
-
-import "./Modal.css";
+import type React from "react"
+import "./Modal.css"
 
 interface ModalProps {
-  isOpen: boolean;
-  hasCloseBtn?: boolean;
-  onClose?: () => void;
-  children: React.ReactNode;
+    title: string
+    onClose: () => void
+    children: React.ReactNode
 }
 
-const Modal = ({isOpen, hasCloseBtn, onClose, children}: ModalProps) => {
-    /* uses the useRef Hook to create a refenence to the <dialog> HTML element */
-  const modalRef =
-    useRef<HTMLDialogElement>(
-      null
-    ); 
+const Modal: React.FC<ModalProps> = ({ title, onClose, children }) => {
+    return (
+        <div className="modal-overlay">
+            <div className="modal">
+                <div className="modal-header">
+                    <h2>{title}</h2>
+                    <button onClick={onClose}>&times;</button>
+                </div>
+                <div className="modal-content">{children}</div>
+            </div>
+        </div>
+    )
+}
 
-    useEffect( () => {
-        const modalElement = modalRef.current;
-        if (!modalElement) return 
-
-        if (isOpen)
-             {
-            modalElement.showModal();
-        } else {
-            modalElement.close();
-        }
-    }, [isOpen])
-
-  // begin React return
-  return (
-    <dialog ref={modalRef} className="modal">
-      {children}
-    </dialog>
-  );
-  // end React return
-};
-
-export default Modal;
-
-/* this component should: 
-
-- check open / closed state
-- have a close button or some way to exit without interaction
-- define some closing behaviou 
-- handle any children appropriately
-
-*/
+export default Modal
