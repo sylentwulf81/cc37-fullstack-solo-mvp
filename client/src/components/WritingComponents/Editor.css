@@ -1,0 +1,22 @@
+.script-component-container {
+  display: flex;
+  gap: 2rem;
+  padding: 1rem;
+  border-radius: 20px;
+}
+
+.script-editor-textarea {
+  background: grey;
+}
+
+.editor-section,
+.preview-section {
+  flex: 1;
+  min-width: 0; /* Prevents flex items from overflowing */
+}
+
+textarea {
+  width: 100%;
+  height: 100%;
+  resize: vertical;
+}

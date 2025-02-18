@@ -1,5 +1,4 @@
 require("dotenv").config();
-
 const express = require("express");
 const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
@@ -9,13 +8,14 @@ const router = express.Router();
 // Register Route
 router.post("/register", async (req, res) => {
   const { username, email, password } = req.body;
-
   try {
     // Check if user exists
     const existingUser = await knex("users").where({ username }).first();
-
     if (existingUser) {
-      return res.status(400).json({ message: "User already exists!" });
+      return res.status(400).json({
+        error: true,
+        message: "User already exists!",
+      });
     }
 
     // Hash password
@@ -36,42 +36,60 @@ router.post("/register", async (req, res) => {
     });
   } catch (error) {
     console.error("Registration error:", error);
-    res.status(500).json({ message: "Server error during registration" });
+    res.status(500).json({ 
+      error: true,
+      message: "Server error during registration",
+      detail: error.message || "Unknown error occurred"
+    });
   }
 });
 
 // Login Route
 router.post("/login", async (req, res) => {
   const { username, password } = req.body;
+  
+  if (!username || !password) {
+    return res.status(400).json({
+      error: true,
+      message: "Username and password are required"
+    });
+  }
 
   try {
-    console.log("Login attempt for: ", username);
+    console.log("Login attempt for:", username);
+    
+    // validate JWT secret exists
+    if (!process.env.JWT_SECRET) {
+      throw new Error("JWT_SECRET is not configured");
+    }
 
-    // validate JWT
-    console.log(`JWT Secret Exists:`, !!process.env.JWT_SECRET);
-    console.log(`JWT Secret: `, process.env.JWT_SECRET);
     // locate user
     const user = await knex("users").where({ username }).first();
-
     if (!user) {
-      return res.status(400).json({ message: "User not found!" });
+      return res.status(400).json({
+        error: true,
+        message: "User not found"
+      });
     }
 
     // compare password with hash
     const isMatch = await bcryptjs.compare(
       password,
-      user?.password_hash || user?.password
+      user.password_hash || user.password
     );
-
+    
     if (!isMatch) {
-      return res.status(400).json({ message: "Invalid credentials!" });
+      return res.status(400).json({
+        error: true,
+        message: "Invalid credentials"
+      });
     }
 
     // generate the jwt
     const token = jwt.sign(
       { username: user.username },
       process.env.JWT_SECRET,
-      { expiresIn: "1h" } // might need to be longer
+      { expiresIn: "1h" }
     );
 
     res.json({
@@ -84,7 +102,11 @@ router.post("/login", async (req, res) => {
     });
   } catch (error) {
     console.error("Login error:", error);
-    res.status(500).json({ message: "Server error during login" });
+    res.status(500).json({
+      error: true,
+      message: "Login failed",
+      detail: error.message || "Unknown error occurred"
+    });
   }
 });
 

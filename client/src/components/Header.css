@@ -22,6 +22,7 @@
 
 button {
   font-family: var(--subtitle-font);
+  cursor: pointer;
 }
 
 .nav-list li {
@@ -41,8 +42,4 @@ button {
 
 .nav-list button:hover {
   color: #0056b3;
-}
-
-button {
-  cursor: none;
 }

@@ -1,26 +1,28 @@
 @import "./components/_root.css";
 
 h1 {
-    background: none;
+  background: none;
 }
 
 .front-page-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
 }
 
 .front-page-title {
-    font-family: var(--title-font);
+  font-family: var(--title-font);
 }
 
 .front-page-subtitle {
-    font-family: var(--subtitle-font);
+  font-family: var(--subtitle-font);
 }
 
 .front-page-body {
-    font-family: var(--body-font);
+  font-family: var(--body-font);
 }
+
+/* ScriptPreview and ScriptEditor styling */

@@ -1,30 +1,37 @@
-// import { useState } from 'react'
-import './App.css'
+// App.tsx
+import { useState } from "react";
+import "./App.css";
 
 /* components */
-import Header from './components/Header'
-// import Modal from './components/Modal'
+import Header from "./components/Header";
+import Editor from "./components/WritingComponents/Editor";
+import StaticFrontPage from "./components/StaticFrontPage";
+// import Profile from "./components/Profile"; // TODO create profile page with links to issues
+// import Modal from './components/Modal' // TODO is this needed?
 
-
+type FrontPageView =
+  | "displayStaticFrontPage"
+  | "displayEditor"
+  | "displayProfile";
 
 function App() {
-  // const [count, setCount] = useState(0)
+  const [currentView, setCurrentView] = useState<FrontPageView>(
+    "displayStaticFrontPage"
+  );
 
   return (
-      <>
-        <div>
-          <Header />
-        </div>
-        <div className="front-page-container">
-          <h1 className="front-page-title">You Craft Your Story. ScriptHero Does The Rest.</h1>
-          <h2 className="front-page-subtitle">ScriptHero is perfect tool to write perfectly formatted, Western-style comic books.</h2>
-          <p><img src="https://picsum.photos/id/1/800/600" alt={"placeholder for main page hero image"} /></p>
-          <h3 className="front-page-body">Placeholder for LOGIN big button</h3>
-          <h3 className="front-page-body">Placeholder for REGISTER big button</h3>
-        </div>
-
-      </>
-  )
+    <>
+      <div>
+        <Header />
+      </div>
+      <div>
+        {currentView === "displayStaticFrontPage" && (
+          <StaticFrontPage setCurrentView={setCurrentView} />
+        )}
+      </div>
+      <div>{currentView === "displayEditor" && <Editor />}</div>
+    </>
+  );
 }
 
-export default App
+export default App;
