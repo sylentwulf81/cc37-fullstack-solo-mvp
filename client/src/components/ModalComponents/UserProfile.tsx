@@ -11,7 +11,7 @@ export default function UserProfile() {
     <>
       <h1>User Profile</h1>
       <div>My Projects</div>
-      {/* on selecting a project, move to Editor and populate editor with text and add onSuccess toast with project name */}
+      {/* on selecting a project, move user to Editor and populate editor with text and add onSuccess toast with project name */}
     </>
   );
 }
