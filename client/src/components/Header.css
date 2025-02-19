@@ -1,16 +1,40 @@
 @import "_root.css";
 
-
 .header {
   background-color: #f8f9fa;
-  padding: 1rem;
+  padding: 1rem 2rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   caret-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+}
+
+.home-section {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.2rem;
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+.home-button {
+  display: flex;
+  align-items: center;
+  color: #007bff;
+  font-size: 1.4rem;
+  transition: color 0.3s ease;
+}
+
+.home-button:hover {
+  color: #0056b3;
 }
 
 .nav {
   display: flex;
-  justify-content: flex-end;
+  align-items: center;
 }
 
 .nav-list {
@@ -18,16 +42,14 @@
   margin: 0;
   padding: 0;
   display: flex;
-}
-
-button {
-  font-family: var(--subtitle-font);
-  cursor: pointer;
+  align-items: center;
+  gap: 1.5rem;
 }
 
 .nav-list li {
-  margin-left: 1rem;
-  cursor: none;
+  caret-color: transparent;
+  display: flex;
+  align-items: center;
 }
 
 .nav-list button {
@@ -37,9 +59,35 @@ button {
   cursor: pointer;
   font-size: 1rem;
   padding: 0.5rem 1rem;
-  transition: color 0.3s ease;
+  transition: all 0.3s ease;
+  border-radius: 4px;
+  font-family: var(--subtitle-font);
 }
 
 .nav-list button:hover {
   color: #0056b3;
+  background-color: rgba(0, 123, 255, 0.1);
+}
+
+.welcome-message {
+  color: var(--text-color);
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  background-color: rgba(0, 123, 255, 0.1);
+  border-radius: 4px;
+  margin: 0;
+}
+
+/* Style groups of buttons differently */
+.auth-section {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.utility-section {
+  display: flex;
+  gap: 0.5rem;
+  margin-left: 1.5rem;
+  padding-left: 1.5rem;
+  border-left: 1px solid #dee2e6;
 }

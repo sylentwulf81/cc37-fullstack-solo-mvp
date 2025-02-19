@@ -1,11 +1,10 @@
-require("dotenv").config();
 const express = require("express");
 const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const knex = require("../db");
 const router = express.Router();
 
-// Register Route
+// ----- registration route ----- */
 router.post("/register", async (req, res) => {
   const { username, email, password } = req.body;
   try {
@@ -18,10 +17,10 @@ router.post("/register", async (req, res) => {
       });
     }
 
-    // Hash password
+    // hash password using brcyptjs
     const hashedPassword = await bcryptjs.hash(password, 10);
 
-    // Insert new user
+    // insert new user
     const [newUser] = await knex("users")
       .insert({
         username,
@@ -36,39 +35,46 @@ router.post("/register", async (req, res) => {
     });
   } catch (error) {
     console.error("Registration error:", error);
-    res.status(500).json({ 
+    res.status(500).json({
       error: true,
       message: "Server error during registration",
-      detail: error.message || "Unknown error occurred"
+      detail: error.message || "Unknown error occurred",
     });
   }
 });
 
-// Login Route
+// ----- login route ----- */
 router.post("/login", async (req, res) => {
-  const { username, password } = req.body;
-  
-  if (!username || !password) {
+  const { identifier, password } = req.body;
+
+  if (!identifier || !password) {
     return res.status(400).json({
       error: true,
-      message: "Username and password are required"
+      message: "Identifier and password are required",
     });
   }
 
   try {
-    console.log("Login attempt for:", username);
-    
+    console.log("Login attempt for:", identifier);
+
     // validate JWT secret exists
     if (!process.env.JWT_SECRET) {
       throw new Error("JWT_SECRET is not configured");
     }
 
-    // locate user
-    const user = await knex("users").where({ username }).first();
+    console.log("JWT_SECRET:", process.env.JWT_SECRET); // Debugging line to check JWT_SECRET
+
+    // locate user by username or email
+    const user = await knex("users")
+      .where(function () {
+        this.where({ username: identifier }).orWhere({ email: identifier });
+      })
+      .first();
+
     if (!user) {
       return res.status(400).json({
         error: true,
-        message: "User not found"
+        message: "User not found",
       });
     }
 
@@ -77,11 +83,11 @@ router.post("/login", async (req, res) => {
       password,
       user.password_hash || user.password
     );
-    
+
     if (!isMatch) {
       return res.status(400).json({
         error: true,
-        message: "Invalid credentials"
+        message: "Invalid credentials",
       });
     }
 
@@ -92,9 +98,16 @@ router.post("/login", async (req, res) => {
       { expiresIn: "1h" }
     );
 
+    // Set the token as an HTTP-Only cookie
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production", // Use secure cookies in production
+      sameSite: "strict",
+      maxAge: 3600000, // 1 hour in milliseconds
+    });
+
     res.json({
       message: "Login successful",
-      token,
       user: {
         id: user.id,
         username: user.username,
@@ -105,9 +118,18 @@ router.post("/login", async (req, res) => {
     res.status(500).json({
       error: true,
       message: "Login failed",
-      detail: error.message || "Unknown error occurred"
+      detail: error.message || "Unknown error occurred",
     });
   }
 });
 
+// Logout Route
+router.post("/logout", (req, res) => {
+  res.clearCookie("token");
+  res.json({ message: "Logged out successfully" });
+});
+
 module.exports = router;
+
+// TODO add change && forgot password routes
+// change password might go on the user profile page, forgot should be on login page

@@ -1,3 +1,5 @@
+/* fixes automatic padding and margin in certain browsers (I'm looking at you, Safari...) */
+
 body {
   margin: 0;
   padding: 0;

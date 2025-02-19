@@ -1,26 +1,19 @@
 import React, { useState } from "react";
 import "./RegisterForm.css";
 
-interface FormData {
-  name: string;
-  email: string;
-  password: string;
+interface RegisterFormProps {
+  onSuccess: () => void;
+  onClose: () => void;
 }
 
-interface ApiResponse {
-  success: boolean;
-  message: string;
-}
-
-const RegisterForm: React.FC = () => {
-  const [formData, setFormData] = useState<FormData>({
-    name: "",
+const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onClose }) => {
+  const [formData, setFormData] = useState({
+    username: "",
     email: "",
     password: "",
+    confirmPassword: "",
   });
-  const [error, setError] = useState<string>("");
-  const [success, setSuccess] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -32,88 +25,111 @@ const RegisterForm: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
-    setIsLoading(true);
+    setError(null);
+
+    // basic validation
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords don't match");
+      return;
+    }
 
     try {
-      const response = await fetch("/auth/login", {
+      const response = await fetch("http://localhost:8080/auth/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          username: formData.username,
+          email: formData.email,
+          password: formData.password,
+        }),
+        credentials: "include",
       });
 
-      const data: ApiResponse = await response.json();
-
       if (!response.ok) {
+        const data = await response.json();
         throw new Error(data.message || "Registration failed");
       }
 
-      setSuccess(true);
-      // Optional: Redirect user or show success message
+      // checks for spooky onSuccess behaviour
+      if (typeof onSuccess === "function") {
+        onSuccess();
+      } else {
+        console.error("onSuccess is not a function:", onSuccess);
+      }
+
+      onSuccess();
     } catch (err) {
-      setError(
-        err instanceof Error
-          ? err.message
-          : "An error occurred during registration"
-      );
-    } finally {
-      setIsLoading(false);
+      setError(err instanceof Error ? err.message : "Registration failed");
     }
   };
 
-  if (success) {
-    return (
-      <div className="success-message">
-        Registration successful! You can now log in.
-      </div>
-    );
-  }
-
   return (
-    <div className="register-container">
-      <h1>Register for ScriptHero</h1>
+    <div className="register-form">
+      <h2>Create Account</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
+          <label htmlFor="username">Username</label>
           <input
             type="text"
-            name="name"
-            value={formData.name}
+            id="username"
+            name="username"
+            value={formData.username}
             onChange={handleChange}
-            placeholder="Your Name"
             required
           />
         </div>
+
         <div className="form-group">
+          <label htmlFor="email">Email</label>
           <input
             type="email"
+            id="email"
             name="email"
             value={formData.email}
             onChange={handleChange}
-            placeholder="Your Email"
             required
           />
         </div>
+
         <div className="form-group">
+          <label htmlFor="password">Password</label>
           <input
             type="password"
+            id="password"
             name="password"
             value={formData.password}
             onChange={handleChange}
-            placeholder="Password"
             required
           />
         </div>
+
+        <div className="form-group">
+          <label htmlFor="confirmPassword">Confirm Password</label>
+          <input
+            type="password"
+            id="confirmPassword"
+            name="confirmPassword"
+            value={formData.confirmPassword}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
         {error && <div className="error-message">{error}</div>}
-        <button type="submit" disabled={isLoading} className="submit-button">
-          {isLoading ? "Registering..." : "Register"}
-        </button>
+
+        <div className="form-actions">
+          <button type="submit" className="button-global">
+            Register
+          </button>
+          <button type="button" className="button-global" onClick={onClose}>
+            Cancel
+          </button>
+        </div>
       </form>
     </div>
   );
 };
 
 export default RegisterForm;
-
-// TODO api call currently not working. Routes work in postman but not in frontend.

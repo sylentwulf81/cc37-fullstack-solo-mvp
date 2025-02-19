@@ -1,3 +1,8 @@
+/*
+This adds global styling for all pages, with some specific page stylings being pushed to their corresponding ComponentName.css file
+Will eventually only be used for variable based styling and truly global elements
+*/
+
 :root {
   --primary-color: #fbfbfb;
   --complementary-color: #e8f9ff;

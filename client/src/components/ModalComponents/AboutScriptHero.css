@@ -15,7 +15,10 @@
   line-height: 1.6;
 }
 
-/* displays feature highlights as individual cards */
+/* 
+displays feature highlights as individual cards 
+would be nice for this to show a single card and auto-rotate on a carosel
+*/
 .feature-highlights {
   margin-top: 2rem;
   padding: 1rem;
