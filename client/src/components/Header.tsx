@@ -10,7 +10,7 @@ import ContactForm from "./ModalComponents/ContactForm";
 import LoginForm from "./ModalComponents/LoginForm";
 
 // profile display handling
-import UserProfile from "./ModalComponents/UserProfile";
+// import UserProfile from "./ModalComponents/UserProfile";
 
 // styling
 import "./Header.css";
