@@ -20,3 +20,133 @@ textarea {
   height: 100%;
   resize: vertical;
 }
+
+/* PDF Export Styling */
+.script-preview-textarea {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 10pt;
+  line-height: 1.4;
+  padding: 30pt 40pt 40pt 30pt; /* top right bottom left */
+  background: white;
+  color: black;
+  width: 8.5in; /* Standard letter width */
+  min-height: 11in; /* Standard letter height */
+  margin: 0 auto;
+  box-sizing: border-box;
+  white-space: pre-wrap; /* Preserves whitespace and wraps */
+}
+
+/* Regular text */
+.script-preview-textarea p {
+  margin: 4pt 0;
+  font-size: 10pt;
+  line-height: 1.4;
+  font-family: "Courier New", Courier, monospace;
+}
+
+/* Dialogue styling - bold text (speaker names) */
+.script-preview-textarea strong {
+  text-transform: uppercase;
+  font-weight: bold;
+  font-family: "Courier New", Courier, monospace;
+}
+
+/* Special text (captions, SFX) */
+.script-preview-textarea em {
+  font-style: normal;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-family: "Courier New", Courier, monospace;
+  display: block;
+  margin: 4pt 0;
+}
+
+/* Headings */
+.script-preview-textarea h1 {
+  /* Page headings */
+  font-size: 16pt;
+  font-weight: bold;
+  margin: 12pt 0 3pt 0;
+  text-transform: uppercase;
+  page-break-before: always;
+  font-family: "Courier New", Courier, monospace;
+  letter-spacing: 1pt;
+}
+
+.script-preview-textarea h2 {
+  /* Panel headings */
+  font-size: 12pt;
+  font-weight: bold;
+  margin: 8pt 0 4pt 0;
+  text-transform: uppercase;
+  font-family: "Courier New", Courier, monospace;
+}
+
+/* Dialogue styling */
+.script-preview-textarea p[style*="text-align: center"] {
+  margin: 4pt auto;
+  max-width: 60%; /* Narrower width for dialogue */
+  font-size: 10pt;
+  font-family: "Courier New", Courier, monospace;
+}
+
+/* Add spacing between character name and dialogue */
+.script-preview-textarea br {
+  margin: 0;
+  line-height: 1.2;
+}
+
+/* Script Component Styling */
+.script-page {
+  font-size: 16pt;
+  font-weight: bold;
+  margin: 2pt 0 0pt 0;
+  text-transform: uppercase;
+  page-break-before: always;
+  font-family: "Courier New", Courier, monospace;
+  letter-spacing: 1pt;
+  color: blue;
+}
+
+.script-panel {
+  font-size: 12pt;
+  font-weight: bold;
+  margin: 0pt 0 4pt 0;
+  text-transform: uppercase;
+  font-family: "Courier New", Courier, monospace;
+}
+
+.script-text {
+  margin: 4pt 0;
+  font-size: 10pt;
+  line-height: 1.4;
+  font-family: "Courier New", Courier, monospace;
+}
+
+.script-speaker {
+  text-transform: uppercase;
+}
+
+.script-dialogue {
+  margin: 4pt 0;
+  font-size: 10pt;
+  line-height: 1.4;
+  font-family: "Courier New", Courier, monospace;
+}
+
+.script-caption {
+  font-weight: bold;
+  text-transform: uppercase;
+  margin: 4pt 0;
+  font-size: 10pt;
+  line-height: 1.4;
+  font-family: "Courier New", Courier, monospace;
+}
+
+/* Remove any conflicting styles */
+.script-preview-textarea h1,
+.script-preview-textarea h2,
+.script-preview-textarea strong,
+.script-preview-textarea em {
+  all: unset;
+}

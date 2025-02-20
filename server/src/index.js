@@ -1,14 +1,26 @@
-require("dotenv").config();
+// Set NODE_ENV if not already set
+process.env.NODE_ENV = process.env.NODE_ENV || "development";
+
+const path = require("path");
+require("dotenv").config({ path: path.join(__dirname, "../.env.local") });
+
+console.log(`Running in ${process.env.NODE_ENV} mode`);
 console.log("Environment Variables Loaded:");
-console.log("JWT_SECRET:", process.env.JWT_SECRET);
-console.log("DB_USER:", process.env.DB_USER);
-console.log("DB_HOST:", process.env.DB_HOST);
+console.log("JWT_SECRET:", process.env.JWT_SECRET ? "✓ [Set]" : "✗ [Not Set]");
+console.log("DB_USER:", process.env.DB_USER ? "✓ [Set]" : "✗ [Not Set]");
+console.log("DB_HOST:", process.env.DB_HOST ? "✓ [Set]" : "✗ [Not Set]");
+console.log("DB_NAME:", process.env.DB_NAME ? "✓ [Set]" : "✗ [Not Set]");
+console.log("DB_PORT:", process.env.DB_PORT ? "✓ [Set]" : "✗ [Not Set]");
+console.log(
+  "Attempting to connect to database:",
+  process.env.DB_NAME || "script_hero"
+);
 
 const express = require("express");
 const authRoutes = require("./routes/auth");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
-const path = require("path");
+const db = require("./db"); // Import the database module
 
 const app = express();
 

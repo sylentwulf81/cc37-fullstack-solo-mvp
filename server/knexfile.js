@@ -1,10 +1,11 @@
-require("dotenv").config({ path: "./.env.local" });
+const path = require("path");
+require("dotenv").config({ path: path.join(__dirname, ".env.local") });
 
-const DB_USER = process.env.DB_USER;
-const DB_PASSWORD = process.env.DB_PASSWORD;
+const DB_USER = process.env.DB_USER || "postgres";
+const DB_PASSWORD = process.env.DB_PASSWORD || "postgres";
 const DB_HOST = process.env.DB_HOST || "127.0.0.1";
 const DB_PORT = process.env.DB_PORT || "5432";
-const DB_NAME = process.env.DB_NAME;
+const DB_NAME = process.env.DB_NAME || "script_hero";
 const DB_URL = process.env.DATABASE_URL;
 
 module.exports = {

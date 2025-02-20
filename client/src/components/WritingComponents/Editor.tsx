@@ -1,4 +1,4 @@
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, useEffect } from "react";
 import ScriptPreview from "./ScriptPreview";
 
 // styles
@@ -16,8 +16,19 @@ type ScriptElement = {
 
 */
 
+const STORAGE_KEY = "script_hero_content";
+
 export default function Editor() {
-  const [scriptContent, setScriptContent] = useState("Your Epic Tale...");
+  const [scriptContent, setScriptContent] = useState(() => {
+    // Load saved content from localStorage on initial render
+    const savedContent = localStorage.getItem(STORAGE_KEY);
+    return savedContent || "Your Epic Tale...";
+  });
+
+  // Save to localStorage whenever content changes
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY, scriptContent);
+  }, [scriptContent]);
 
   // formats the script content into markdown syntax
   const formatScriptToMarkdown = (scriptText: string): string => {
@@ -32,7 +43,7 @@ export default function Editor() {
         // checks for page followed by a number
         const parts = trimmedLine.split(" ");
         if (parts.length >= 2 && !isNaN(Number(parts[1]))) {
-          return `## ${trimmedLine.toUpperCase()}`;
+          return `<div class="script-page">${trimmedLine.toUpperCase()}</div>`;
         }
       }
 
@@ -40,7 +51,7 @@ export default function Editor() {
       if (trimmedLine.toUpperCase().startsWith("PANEL ")) {
         const parts = trimmedLine.split(" ");
         if (parts.length >= 2 && !isNaN(Number(parts[1]))) {
-          return `### ${trimmedLine.toUpperCase()}`;
+          return `<div class="script-panel">${trimmedLine.toUpperCase()}</div>`;
         }
       }
 
@@ -51,29 +62,21 @@ export default function Editor() {
         const dialogue = trimmedLine.substring(colonIndex + 1).trim();
 
         // check if the speaker is a single word (no spaces)
-        // todo: fix for two word names ex/ "charlie reeves:"
+        // TODO fix for two word names ex/ "charlie reeves:"
         if (speaker.indexOf(" ") === -1) {
           const speakerUpper = speaker.toUpperCase();
 
           // unique formatting for captions and sfx
           if (speakerUpper === "CAPTION" || speakerUpper === "SFX") {
-            return `_${speakerUpper}_: ${dialogue}`;
+            return `<div class="script-caption">${speakerUpper}: ${dialogue}</div>`;
           }
 
           // Regular dialogue
-
-          let dialogueArray = [
-            `<p style="text-align: center;">${speakerUpper}: </p>`,
-            `\n`,
-            `<p style="text-align: center;"> ${dialogue} </p>`,
-          ];
-
-          return dialogueArray.join("");
-          // return `>> _${speakerUpper}_: ${dialogue} `;
+          return `<div class="script-dialogue"><span class="script-speaker"> ${speakerUpper}:</span> ${dialogue}</div>`;
         }
       }
 
-      return line;
+      return `<div class="script-text">${line}</div>`;
     });
 
     return formattedLines.join("\n");

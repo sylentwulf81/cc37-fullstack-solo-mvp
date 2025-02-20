@@ -1,3 +1,8 @@
+/* 
+near-global styling for modal components
+some components may have specific styling in their associated css files
+*/
+
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -36,8 +41,4 @@
   border: none;
   font-size: 1.5rem;
   cursor: pointer;
-}
-
-.modal-content {
-  /* don't think we need this anymore, leaving it for now until contact form is completed */
 }

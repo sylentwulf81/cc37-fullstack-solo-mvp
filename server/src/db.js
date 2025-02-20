@@ -1,47 +1,84 @@
+const { Pool } = require("pg");
 const knex = require("knex");
+const config = require("../knexfile");
 
-/*
-port:8080 is Express default port
-port: 5432 is postgres default port - HTTP requests are routed here
-we 'talk to' the Express server on 8080, and then Express 'talks to' the database on 8080 behind the scenes
-we never directly connect to 8080
-*/
+// Determine environment
+const isDevelopment = process.env.NODE_ENV !== "production";
 
-const config =
-  process.env.NODE_ENV === "production"
-    ? {
-        client: "postgresql",
-        connection: process.env.DATABASE_URL,
-        pool: {
-          min: 2,
-          max: 10,
-        },
-        ssl: { rejectUnauthorized: false },
-      }
-    : {
-        client: "postgresql",
-        connection: {
-          host: process.env.DB_HOST || "localhost",
-          port: process.env.DB_PORT || 5432,
-          database: process.env.DB_NAME || "scriptforge",
-          user: process.env.DB_USER || "damienlavizzo",
-          password: process.env.DB_PASSWORD || "",
-        },
-        pool: {
-          min: 2,
-          max: 10,
-        },
-      };
+// Initialize knex with the appropriate configuration
+const knexInstance = knex(
+  isDevelopment ? config.development : config.production
+);
 
-const db = knex(config);
+// Set up connection config based on environment
+let dbConfig;
 
-// validates we're connected to the server
-db.raw("SELECT 1")
-  .then(() => {
-    console.log("Database connected successfully");
-  })
-  .catch((err) => {
-    console.error("Database connection failed:", err);
-  });
+if (isDevelopment) {
+  console.log("Using local development database 'script_hero'...");
+  dbConfig = {
+    user: process.env.DB_USER || "postgres",
+    password: process.env.DB_PASSWORD || "postgres",
+    database: process.env.DB_NAME || "script_hero",
+    host: process.env.DB_HOST || "localhost",
+    port: parseInt(process.env.DB_PORT || "5432"),
+  };
+} else {
+  console.log("Using production database");
+  dbConfig = {
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+    host: process.env.DB_HOST,
+    port: parseInt(process.env.DB_PORT || "5432"),
+    ssl: { rejectUnauthorized: false },
+  };
+}
 
-module.exports = db;
+// Log connection config (without sensitive info)
+console.log("Database Configuration:");
+console.log("- Host:", dbConfig.host);
+console.log("- Port:", dbConfig.port);
+console.log("- Database:", dbConfig.database);
+console.log("- User:", dbConfig.user);
+
+// handles frequent connections / disconnections in development environment
+const pool = new Pool(dbConfig);
+
+// Test the connection immediately
+async function testConnection() {
+  try {
+    const client = await pool.connect();
+    console.log("Successfully connected to PostgreSQL!");
+
+    // Test query to verify database access
+    const result = await client.query("SELECT current_database() as db_name");
+    console.log("Connected to database:", result.rows[0].db_name);
+
+    client.release();
+    return true;
+  } catch (err) {
+    console.error("Database connection error:");
+    console.error("- Error name:", err.name);
+    console.error("- Error message:", err.message);
+    console.error("- Error code:", err.code);
+    if (err.code === "ECONNREFUSED") {
+      console.error("Connection refused. Is PostgreSQL running?");
+    } else if (err.code === "3D000") {
+      console.error("Database does not exist!");
+    } else if (err.code === "28P01") {
+      console.error("Invalid password for user!");
+    }
+    throw err;
+  }
+}
+
+// Run the test connection
+testConnection().catch((err) => {
+  console.error("Failed to establish initial connection");
+});
+
+module.exports = {
+  query: (text, params) => pool.query(text, params),
+  pool,
+  knex: knexInstance,
+};

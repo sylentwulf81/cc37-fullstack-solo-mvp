@@ -1,16 +1,20 @@
 const express = require("express");
 const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const knex = require("../db");
+const { knex } = require("../db");
 const router = express.Router();
 
 // ----- registration route ----- */
 router.post("/register", async (req, res) => {
   const { username, email, password } = req.body;
+  console.log("Registration attempt for:", { username, email });
+
   try {
     // Check if user exists
+    console.log("Checking if user exists...");
     const existingUser = await knex("users").where({ username }).first();
     if (existingUser) {
+      console.log("User already exists:", username);
       return res.status(400).json({
         error: true,
         message: "User already exists!",
@@ -18,9 +22,11 @@ router.post("/register", async (req, res) => {
     }
 
     // hash password using brcyptjs
+    console.log("Hashing password...");
     const hashedPassword = await bcryptjs.hash(password, 10);
 
     // insert new user
+    console.log("Inserting new user...");
     const [newUser] = await knex("users")
       .insert({
         username,
@@ -29,12 +35,18 @@ router.post("/register", async (req, res) => {
       })
       .returning(["id", "username"]);
 
+    console.log("User created successfully:", newUser);
     res.status(201).json({
       message: "User created",
       user: newUser,
     });
   } catch (error) {
-    console.error("Registration error:", error);
+    console.error("Registration error details:");
+    console.error("- Error name:", error.name);
+    console.error("- Error message:", error.message);
+    console.error("- Error code:", error.code);
+    console.error("- Stack trace:", error.stack);
+
     res.status(500).json({
       error: true,
       message: "Server error during registration",
