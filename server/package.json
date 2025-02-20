@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon",
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "build": "npm install && cd ../client && npm install && npm run build && cd ../server",
     "devcon": "concurrently \"npm run dev --prefix client\" \"npm run start --prefix server\""
   },
   "keywords": [],
@@ -19,13 +20,13 @@
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
     "knex": "^3.1.0",
-    "nodemon": "^3.1.9",
     "pg": "^8.13.3"
   },
   "devDependencies": {
     "@types/express": "^5.0.0",
     "@types/node": "^22.13.4",
     "concurrently": "^9.1.2",
+    "nodemon": "^3.1.9",
     "ts-node": "^10.9.2",
     "typescript": "^5.7.3"
   }
