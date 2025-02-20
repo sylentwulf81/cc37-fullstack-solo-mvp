@@ -31,14 +31,17 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, onClose }) => {
     try {
       console.log("Submitting login with:", formData);
 
-      const response = await fetch("http://localhost:8080/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-        credentials: "include",
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/auth/login`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+          credentials: "include",
+        }
+      );
 
       const data = await response.json();
 
