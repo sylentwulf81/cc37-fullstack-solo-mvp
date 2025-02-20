@@ -54,10 +54,13 @@ const Header: React.FC = () => {
   const handleLogout = async () => {
     try {
       // Call logout endpoint to clear the cookie
-      const response = await fetch("http://localhost:8080/auth/logout", {
-        method: "POST",
-        credentials: "include",
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/auth/logout`,
+        {
+          method: "POST",
+          credentials: "include",
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Logout failed");
