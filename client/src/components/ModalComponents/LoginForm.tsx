@@ -1,5 +1,8 @@
 import React, { useState } from "react";
+
+// styling
 import "./LoginForm.css";
+import "./Modal.css";
 
 interface LoginFormProps {
   onSuccess: () => void;

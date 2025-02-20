@@ -1,5 +1,8 @@
 import React, { useState } from "react";
+
+// styling
 import "./RegisterForm.css";
+import "./Modal.css";
 
 interface RegisterFormProps {
   onSuccess: () => void;

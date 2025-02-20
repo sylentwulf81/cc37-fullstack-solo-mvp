@@ -2,6 +2,7 @@
 // TODO add toast in successful submission
 
 import React from "react";
+import "./Modal.css";
 
 const ContactForm: React.FC = () => {
   return (

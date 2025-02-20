@@ -1,19 +1,23 @@
 import React from "react";
+
+// styles
+import "../_root.css";
 import "./AboutScriptHero.css";
+import "./Modal.css";
 
 const AboutScriptHero: React.FC = () => {
   return (
-    <div className="about-content">
+    <div className="modal-title-text">
       <h2>Welcome to ScriptHero</h2>
 
-      <p>
+      <p className="modal-body-text">
         Unleash your inner storyteller with ScriptHero, the premier web app for
         crafting Western-style comic scripts. Built by writers for writers,
         ScriptHero streamlines the comic scripting process so you can focus on
         what matters most – telling amazing stories.
       </p>
 
-      <p>
+      <p className="modal-body-text">
         Whether you're drafting your first comic or you're a seasoned
         professional, our intuitive tools help you format panels, structure
         scenes, and manage dialogue with ease. Transform your ideas into

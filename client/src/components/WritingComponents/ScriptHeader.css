@@ -1,0 +1,100 @@
+/* Windows-style dropdown menu styling */
+
+/* Menu container - using a different class to avoid conflicts */
+.script-menu-container {
+  display: flex;
+  background-color: transparent; /* No background to blend with existing header */
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 14px;
+  height: 24px;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  border: none;
+  box-shadow: none;
+}
+
+/* Menu item styling - more specific selector to avoid conflicts */
+.script-menu-container .script-header-element {
+  padding: 3px 12px;
+  cursor: pointer;
+  position: relative;
+  color: #000000;
+  user-select: none;
+  display: inline-block;
+  border: 1px solid transparent;
+}
+
+.script-menu-container .script-header-element:hover {
+  background-color: #e5f3ff;
+  border: 1px solid #99c9ef;
+  border-radius: 2px;
+}
+
+.script-menu-container .script-header-element:active {
+  background-color: #cce8ff;
+}
+
+/* Dropdown container - more specific selector */
+.script-menu-container .dropdown-container {
+  position: relative;
+  display: inline-block;
+  margin: 0 2px;
+}
+
+/* Dropdown menu styling - more specific selector */
+.script-menu-container .dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #ffffff;
+  min-width: 180px;
+  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  display: none;
+  border: 1px solid #d4d4d4;
+  margin-top: 1px;
+  padding: 2px 0;
+}
+
+.script-menu-container .dropdown-container:hover .dropdown-menu {
+  display: block;
+}
+
+/* Dropdown menu items */
+.dropdown-item {
+  padding: 8px 16px;
+  display: block;
+  text-align: left;
+  color: #000000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.dropdown-item:hover {
+  background-color: #e5f3ff;
+}
+
+.dropdown-item:active {
+  background-color: #cce8ff;
+}
+
+/* Disabled menu items */
+.dropdown-item.disabled {
+  color: #a0a0a0;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* Separator line */
+.dropdown-separator {
+  height: 1px;
+  background-color: #d4d4d4;
+  margin: 4px 0;
+}
+
+/* You can use this class to conditionally show/hide items based on login state
+     by adding logic in your parent component */
+.hidden-menu-item {
+  display: none;
+}
