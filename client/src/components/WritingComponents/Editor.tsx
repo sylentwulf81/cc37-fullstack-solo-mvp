@@ -4,26 +4,20 @@ import ScriptPreview from "./ScriptPreview";
 // styles
 import "./Editor.css";
 
+/* currently unused - placeholder for adding more specific styling to each page element 
+    and tracking page / panel numbers 
+
 type ScriptElement = {
-  // currently unused - placeholder for adding more specific styling to each page element
   type: "PAGE" | "PANEL" | "DIALOGUE" | "TEXT";
   content: string;
   number?: number;
   speaker?: string;
 };
 
+*/
+
 export default function Editor() {
   const [scriptContent, setScriptContent] = useState("Your Epic Tale...");
-
-  // lazy formatting
-
-  const indent = ">";
-  const indentDeep = ">>";
-  const indentDoubleDeep = ">>>";
-
-  const h1 = "#";
-  const h2 = "##";
-  const h3 = "###";
 
   // formats the script content into markdown syntax
   const formatScriptToMarkdown = (scriptText: string): string => {
