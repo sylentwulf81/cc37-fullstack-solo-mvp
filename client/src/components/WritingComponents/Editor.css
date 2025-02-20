@@ -3,37 +3,48 @@
   gap: 2rem;
   padding: 1rem;
   border-radius: 20px;
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
 }
 
 .script-editor-textarea {
   background: grey;
+  width: 100%;
+  min-height: 600px;
 }
 
 .editor-section,
 .preview-section {
   flex: 1;
-  min-width: 0; /* Prevents flex items from overflowing */
+  min-width: 300px; /* Minimum width before wrapping */
 }
 
 textarea {
   width: 100%;
   height: 100%;
   resize: vertical;
+  min-height: 600px;
 }
 
-/* PDF Export Styling */
+/* notouch */
+.preview-section {
+  display: flex;
+  justify-content: center; /* Centers the preview on wider screens */
+  overflow-x: auto; /* Allow horizontal scrolling if needed */
+}
+
+/* notouch */
 .script-preview-textarea {
   font-family: "Courier New", Courier, monospace;
   font-size: 10pt;
   line-height: 1.4;
-  padding: 30pt 40pt 40pt 30pt; /* top right bottom left */
+  padding: 30pt 40pt 40pt 30pt;
   background: white;
   color: black;
-  width: 8.5in; /* Standard letter width */
-  min-height: 11in; /* Standard letter height */
+  width: 8.5in; /* notouch */
+  min-height: 11in; /* notouch*/
   margin: 0 auto;
   box-sizing: border-box;
-  white-space: pre-wrap; /* Preserves whitespace and wraps */
+  white-space: pre-wrap;
 }
 
 /* Regular text */
@@ -149,4 +160,30 @@ textarea {
 .script-preview-textarea strong,
 .script-preview-textarea em {
   all: unset;
+}
+
+/* first attempt at responsive design for laptop screens
+responsive design here is dangerous because it can break the layout of the PDF export
+due to how jsPDF handles the layout of the PDF export. 
+preview PDF export before committing if any changes or additions are made */
+
+@media (max-width: 1200px) {
+  .script-component-container {
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .script-component-container {
+    flex-direction: column;
+  }
+
+  .editor-section,
+  .preview-section {
+    width: 100%;
+  }
+
+  .preview-section {
+    padding: 1rem 0;
+  }
 }
