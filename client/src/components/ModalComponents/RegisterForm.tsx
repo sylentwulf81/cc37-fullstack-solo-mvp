@@ -127,10 +127,12 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onClose }) => {
 
         <div className="form-actions">
           <button type="submit" className="button-global">
-            Register
+            <span className="text">Register</span>
+            <span>Register</span>
           </button>
           <button type="button" className="button-global" onClick={onClose}>
-            Cancel
+            <span className="text">Cancel</span>
+            <span>Cancel</span>
           </button>
         </div>
       </form>
