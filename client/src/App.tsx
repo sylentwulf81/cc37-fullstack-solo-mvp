@@ -8,8 +8,6 @@ import Editor from "./components/WritingComponents/Editor";
 import StaticFrontPage from "./components/StaticFrontPage";
 import ScriptHeader from "./components/WritingComponents/ScriptHeader";
 
-// import Modal from './components/Modal' // TODO is this needed?
-
 type FrontPageView =
   | "displayStaticFrontPage"
   | "displayEditor"
@@ -23,7 +21,7 @@ function App() {
   return (
     <>
       <div>
-        <Header />
+        <Header setCurrentView={setCurrentView} />
       </div>
       <div>
         {/* displayes the Script Editor and Script Editor Header on request */}

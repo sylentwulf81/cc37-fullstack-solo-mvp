@@ -8,8 +8,7 @@ export default function Credits() {
     <>
       <div>Site Design: Damien Lavizzo for Maraka, G.K.</div>
       <br />
-      <div></div>
-      <div className=".modal-title-text">Libraries</div>
+      <div className=".modal-title-text">Resources</div>
       <ul>
         <li>
           <a href="https://github.com/jonschlinkert/remarkable">RemarkableJS</a>{" "}
@@ -20,6 +19,13 @@ export default function Credits() {
           <a href="https://github.com/parallax/jsPDF">jsPDF</a> by parallax
         </li>
         <span>Used to export formatted scripts as PDF</span>
+        <li>
+          SVG Icons courtesy{" "}
+          <a href="https://www.flaticon.com/authors/riajulislam">
+            Ria Julislam
+          </a>{" "}
+          on FlatIcon.com
+        </li>
       </ul>
     </>
   );

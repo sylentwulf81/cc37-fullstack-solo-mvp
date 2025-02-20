@@ -14,7 +14,9 @@ import "../../Modal.css";
 export default function Version() {
   return (
     <>
-      <div>SCRIPTFORGE 0.1.0-alpha.1 Astral Archer</div>
+      <div className="version-info">
+        <div>SCRIPTHERO 0.1.0-alpha.1 Astral Archer</div>
+      </div>
       <br />
       <br />
       <div>

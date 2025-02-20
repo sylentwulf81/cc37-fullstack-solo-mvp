@@ -21,6 +21,7 @@ const STORAGE_KEY = "script_hero_content";
 export default function ScriptHeader() {
   const [activeModal, setActiveModal] = useState<string | null>(null);
   const [lastSaved, setLastSaved] = useState<Date | null>(null);
+  const [showClearConfirmation, setShowClearConfirmation] = useState(false);
 
   useEffect(() => {
     // Check if there's content in localStorage
@@ -42,6 +43,18 @@ export default function ScriptHeader() {
     // For now, this just updates the last saved timestamp
     // since content is automatically saved to localStorage
     setLastSaved(new Date());
+  };
+
+  const handleClearAll = () => {
+    setShowClearConfirmation(true);
+  };
+
+  const confirmClear = () => {
+    localStorage.removeItem(STORAGE_KEY);
+    setShowClearConfirmation(false);
+    // Forces a page reload to clear the editor
+    // TODO currently sets the page to the static front page, needs to reload to the editor
+    window.location.reload();
   };
 
   const saveAsPDF = () => {
@@ -108,6 +121,10 @@ export default function ScriptHeader() {
           <div className="dropdown-item" onClick={saveAsPDF}>
             Export as PDF
           </div>
+          <div className="dropdown-separator"></div>
+          <div className="dropdown-item warning" onClick={handleClearAll}>
+            Clear All
+          </div>
         </div>
       </div>
 
@@ -147,6 +164,31 @@ export default function ScriptHeader() {
         <div className="last-saved-indicator">
           Last saved: {lastSaved.toLocaleTimeString()}
         </div>
+      )}
+
+      {/* Clear All Confirmation Modal */}
+      {showClearConfirmation && (
+        <Modal
+          title="Clear All"
+          onClose={() => setShowClearConfirmation(false)}
+        >
+          <div className="confirmation-modal">
+            <p>
+              Are you sure you want to clear all content? This cannot be undone.
+            </p>
+            <div className="confirmation-buttons">
+              <button className="button-global" onClick={confirmClear}>
+                Yes, Clear All
+              </button>
+              <button
+                className="button-global"
+                onClick={() => setShowClearConfirmation(false)}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </Modal>
       )}
 
       {activeModal && (

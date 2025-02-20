@@ -17,7 +17,13 @@ import "./Header.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouse } from "@fortawesome/free-solid-svg-icons";
 
-const Header: React.FC = () => {
+type HeaderProps = {
+  setCurrentView: (
+    view: "displayStaticFrontPage" | "displayEditor" | "displayProfile"
+  ) => void;
+};
+
+const Header: React.FC<HeaderProps> = ({ setCurrentView }) => {
   const [activeModal, setActiveModal] = useState<string | null>(null);
   const [username, setUsername] = useState<string | null>(null);
   const [showToast, setShowToast] = useState<{
@@ -79,13 +85,27 @@ const Header: React.FC = () => {
     }
   };
 
+  const handleHomeClick = () => {
+    setCurrentView("displayStaticFrontPage");
+  };
+
   return (
     <header className="header">
       <div className="home-section">
-        <span className="home-button">
+        <span
+          className="home-button"
+          onClick={handleHomeClick}
+          style={{ cursor: "pointer" }}
+        >
           <FontAwesomeIcon icon={faHouse} />
         </span>
-        <span>ScriptFORGE</span>
+        <div
+          className="logo"
+          onClick={handleHomeClick}
+          style={{ cursor: "pointer" }}
+        >
+          <span>ScriptHERO</span>
+        </div>
       </div>
 
       <nav className="nav">

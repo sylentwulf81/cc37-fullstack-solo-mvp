@@ -45,13 +45,13 @@ const StaticFrontPage: React.FC<StaticFrontPageProps> = ({
 
   return (
     <div className="front-page-container">
-      <h1 className="front-page-title">
-        Craft Your Story. ScriptFORGE Does The Rest.
-      </h1>
-      <h2 className="front-page-subtitle">
-        ScriptFORGE is perfect tool to write perfectly formatted, Western-style
-        comic books.
-      </h2>
+      <div className="hero-section">
+        <h1>Craft Your Story. ScriptHERO Does The Rest.</h1>
+        <p>
+          ScriptHERO is the perfect tool to write perfectly formatted,
+          Western-style comic book scripts.
+        </p>
+      </div>
       <h2 className="front-page-subtitle">
         No hassle, nothing to install. Just start writing.
       </h2>
