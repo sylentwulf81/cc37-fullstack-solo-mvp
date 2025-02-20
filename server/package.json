@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
-    "build": "npm install && cd ../client && npm install && npx vite build && cd ../server",
+    "build": "npm install && cd ../client && npm install && NODE_ENV=production ./node_modules/.bin/vite build && cd ../server",
     "devcon": "concurrently \"npm run dev --prefix client\" \"npm run start --prefix server\""
   },
   "keywords": [],
