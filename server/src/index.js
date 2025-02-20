@@ -8,6 +8,7 @@ const express = require("express");
 const authRoutes = require("./routes/auth");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
+const path = require("path");
 
 const app = express();
 
@@ -17,7 +18,10 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin:
+      process.env.NODE_ENV === "production"
+        ? "https://scriptforge-cc37-solo-mvp.onrender.com"
+        : "http://localhost:5173",
     credentials: true,
   })
 );
@@ -27,7 +31,16 @@ app.use(
 // login / registration routes
 app.use("/auth", authRoutes);
 
-const port = 8080;
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, "../../client/dist")));
+
+// The "catchall" handler: for any request that doesn't
+// match one above, send back React's index.html file.
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../../client/dist/index.html"));
+});
+
+const port = process.env.PORT || 8080;
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });

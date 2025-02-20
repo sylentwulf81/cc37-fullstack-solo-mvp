@@ -16,15 +16,16 @@ const config =
           min: 2,
           max: 10,
         },
+        ssl: { rejectUnauthorized: false },
       }
     : {
         client: "postgresql",
         connection: {
-          host: process.env.dbSQL_HOST || "localhost",
-          port: process.env.dbSQL_PORT || 5432,
-          database: process.env.dbSQL_DATABASE || "scripthero",
-          user: process.env.dbSQL_USER || "damienlavizzo",
-          password: process.env.dbSQL_PASSWORD || "",
+          host: process.env.DB_HOST || "localhost",
+          port: process.env.DB_PORT || 5432,
+          database: process.env.DB_NAME || "scriptforge",
+          user: process.env.DB_USER || "damienlavizzo",
+          password: process.env.DB_PASSWORD || "",
         },
         pool: {
           min: 2,
