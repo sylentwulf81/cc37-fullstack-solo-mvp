@@ -42,6 +42,7 @@ export default function ScriptHeader() {
   const handleSave = () => {
     // For now, this just updates the last saved timestamp
     // since content is automatically saved to localStorage
+    // TODO this should save the content to the database
     setLastSaved(new Date());
   };
 

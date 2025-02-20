@@ -37,7 +37,7 @@ const Header: React.FC<HeaderProps> = ({ setCurrentView }) => {
   });
 
   useEffect(() => {
-    // check if any user data already exists in localStorage
+    // Check if any user data already exists in localStorage
     const userData = localStorage.getItem("user");
     if (userData) {
       try {
@@ -72,7 +72,7 @@ const Header: React.FC<HeaderProps> = ({ setCurrentView }) => {
         throw new Error("Logout failed");
       }
 
-      // clear local user data on logout (if any)
+      // Clear local user data on logout (if any)
       localStorage.removeItem("user");
       setUsername(null);
       setShowToast({
