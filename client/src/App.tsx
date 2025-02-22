@@ -7,6 +7,8 @@ import Header from "./components/Header";
 import Editor from "./components/WritingComponents/Editor";
 import StaticFrontPage from "./components/StaticFrontPage";
 import ScriptHeader from "./components/WritingComponents/ScriptHeader";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 type FrontPageView =
   | "displayStaticFrontPage"
@@ -18,13 +20,15 @@ function App() {
     "displayStaticFrontPage"
   );
 
+  const notify = () => toast("My first notification!");
+
   return (
     <>
       <div>
         <Header setCurrentView={setCurrentView} />
       </div>
       <div>
-        {/* displayes the Script Editor and Script Editor Header on request */}
+        {/* displays the Script Editor and Script Editor Header on request */}
         {currentView === "displayStaticFrontPage" && (
           <StaticFrontPage setCurrentView={setCurrentView} />
         )}
@@ -33,6 +37,7 @@ function App() {
         {currentView === "displayEditor" && <ScriptHeader />}
         {currentView === "displayEditor" && <Editor />}
       </div>
+      <ToastContainer />
     </>
   );
 }

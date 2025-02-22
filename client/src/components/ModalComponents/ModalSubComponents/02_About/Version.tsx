@@ -14,8 +14,26 @@ import "../../Modal.css";
 export default function Version() {
   return (
     <>
+      <div className="version-info-container">
+        <div className="version-info">
+          SCRIPTHERO 0.2.0-alpha.1 Astral Archer
+        </div>
+        <span>23 FEB 2025</span>
+        <div className="version-info-subtext">
+          <ul>
+            <li>Adds new toast notifications to the app</li>
+          </ul>
+        </div>
+      </div>
+      <hr />
       <div className="version-info">
         <div>SCRIPTHERO 0.1.0-alpha.1 Astral Archer</div>
+        <span>21 FEB 2025</span>
+        <div className="version-info-subtext">
+          <ul>
+            <li>Initial MVP</li>
+          </ul>
+        </div>
       </div>
       <br />
       <br />

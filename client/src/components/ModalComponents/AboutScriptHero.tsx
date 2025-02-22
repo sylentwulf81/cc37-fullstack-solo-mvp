@@ -1,11 +1,10 @@
-import React from "react";
-
 // styles
+
 import "../_root.css";
 import "./AboutScriptHero.css";
 import "./Modal.css";
 
-const AboutScriptHero: React.FC = () => {
+export default function AboutScriptHero() {
   return (
     <div className="modal-title-text">
       <h2>Welcome to ScriptHero</h2>
@@ -39,6 +38,4 @@ const AboutScriptHero: React.FC = () => {
       </div>
     </div>
   );
-};
-
-export default AboutScriptHero;
+}

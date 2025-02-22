@@ -3,14 +3,11 @@ import { useState, useEffect } from "react";
 
 // components
 import Modal from "./Modal";
-import Toast from "./Toast";
 import AboutScriptHero from "./ModalComponents/AboutScriptHero";
 import RegisterForm from "./ModalComponents/RegisterForm";
 import ContactForm from "./ModalComponents/ContactForm";
 import LoginForm from "./ModalComponents/LoginForm";
-
-// profile display handling
-// import UserProfile from "./ModalComponents/UserProfile";
+import { toast } from "react-toastify";
 
 // styling
 import "./Header.css";
@@ -26,15 +23,6 @@ type HeaderProps = {
 const Header: React.FC<HeaderProps> = ({ setCurrentView }) => {
   const [activeModal, setActiveModal] = useState<string | null>(null);
   const [username, setUsername] = useState<string | null>(null);
-  const [showToast, setShowToast] = useState<{
-    show: boolean;
-    message: string;
-    type: "success" | "error" | "info";
-  }>({
-    show: false,
-    message: "",
-    type: "success",
-  });
 
   useEffect(() => {
     // Check if any user data already exists in localStorage
@@ -75,11 +63,7 @@ const Header: React.FC<HeaderProps> = ({ setCurrentView }) => {
       // Clear local user data on logout (if any)
       localStorage.removeItem("user");
       setUsername(null);
-      setShowToast({
-        show: true,
-        message: "Logged out successfully!",
-        type: "success",
-      });
+      toast.success("Logged out successfully! See you next time!");
     } catch (error) {
       console.error("Logout error:", error);
     }
@@ -138,19 +122,8 @@ const Header: React.FC<HeaderProps> = ({ setCurrentView }) => {
         </ul>
       </nav>
 
-      {showToast.show && (
-        <Toast
-          message={showToast.message}
-          type={showToast.type}
-          onClose={() =>
-            setShowToast({ show: false, message: "", type: "success" })
-          }
-        />
-      )}
-
       {activeModal && (
         <Modal title={activeModal} onClose={closeModal}>
-          {/* modal content based on activeModal */}
           {activeModal === "login" && (
             <LoginForm
               onSuccess={() => {
@@ -161,12 +134,11 @@ const Header: React.FC<HeaderProps> = ({ setCurrentView }) => {
                   try {
                     const user = JSON.parse(userData);
                     setUsername(user.username);
-                    setShowToast({
-                      show: true,
-                      message: `Welcome back, ${user.username}!`,
-                      type: "success",
-                    });
+                    toast.success(
+                      `Logged in successfully! Welcome back, ${user.username}!`
+                    );
                   } catch (error) {
+                    toast.error("Error logging in, please try again.");
                     console.error("Error parsing user data:", error);
                   }
                 }

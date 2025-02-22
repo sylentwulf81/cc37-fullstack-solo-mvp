@@ -69,7 +69,6 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, onClose }) => {
 
   return (
     <div className="login-form">
-      <h2>Login</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="identifier">Username or Email</label>

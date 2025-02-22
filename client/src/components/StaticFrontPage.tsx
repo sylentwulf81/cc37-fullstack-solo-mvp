@@ -46,7 +46,7 @@ const StaticFrontPage: React.FC<StaticFrontPageProps> = ({
   return (
     <div className="front-page-container">
       <div className="hero-section">
-        <h1>Craft Your Story. ScriptHERO Does The Rest.</h1>
+        <h1>Craft your story. ScriptHERO does the rest.</h1>
         <p>
           ScriptHERO is the perfect tool to write perfectly formatted,
           Western-style comic book scripts.
@@ -55,7 +55,7 @@ const StaticFrontPage: React.FC<StaticFrontPageProps> = ({
       <h2 className="front-page-subtitle">
         No hassle, nothing to install. Just start writing.
       </h2>
-      <div className="auth-buttons">
+      <div className="get-started-buttons">
         <button className="button-global" onClick={handleEditorClick}>
           <span className="text">Get Started</span>
           <span>Start Writing!</span>

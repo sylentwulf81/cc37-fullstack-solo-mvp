@@ -1,10 +1,10 @@
 // allows the user to send a contact / support email
 // TODO add toast in successful submission
+// TODO form doesn't "go" anywhere currently when submitted
 
-import React from "react";
 import "./Modal.css";
 
-const ContactForm: React.FC = () => {
+export default function ContactForm() {
   return (
     <>
       <form action="https://formsubmit.co/your@email.com" method="POST">
@@ -20,6 +20,4 @@ const ContactForm: React.FC = () => {
       </form>
     </>
   );
-};
-
-export default ContactForm;
+}

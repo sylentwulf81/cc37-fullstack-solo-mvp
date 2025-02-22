@@ -26,7 +26,25 @@ export default function Credits() {
           </a>{" "}
           on FlatIcon.com
         </li>
+        <li>
+          <a href="https://www.npmjs.com/package/react-toastify">
+            React Toastify
+          </a>{" "}
+          by fkhadra
+        </li>
+        <span>Used to display custom toast messages</span>
       </ul>
+      <div>
+        Special thanks to:
+        <ul>Will Brammer</ul>
+        <ul>Blake </ul>
+        <ul>Brendan Cowan</ul>
+        <ul>Jill Hackney</ul>
+        <ul>
+          and the rest of the Code Chrysalis team for their support and
+          guidance.
+        </ul>
+      </div>
     </>
   );
 }
